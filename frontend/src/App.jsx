@@ -4,7 +4,9 @@ import FundexaDashboard from "./Admin/Dashboard";
 import Home from "./page/Home";
 import Invest from "./page/Invest";
 import Withdraw from "./page/Withdraw";
-import { Pay } from "./page/Pay";
+
+import Account from "./page/Account";
+import { AddCash } from "./page/AddCash";
 
 function App() {
   return (
@@ -25,9 +27,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<FundexaDashboard />} />
-            <Route path="/recharge" element={<Pay />} />
+            <Route path="/recharge" element={<AddCash />} />
             <Route path="/withdraw" element={<Withdraw />} />
             <Route path="/invest" element={<Invest />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
         </div>
       </div>

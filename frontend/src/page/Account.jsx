@@ -10,16 +10,17 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-export default function FundexProfile() {
+export default function Account() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-700 via-amber-600 to-yellow-500 p-4">
+    // from-amber-700 via-amber-600 to-yellow-500
+    <div className="min-h-screen bg-gradient-to-br   p-4">
       <div className="max-w-sm mx-auto bg-white rounded-3xl overflow-hidden shadow-2xl">
         {/* Header Section */}
         <div className="bg-gradient-to-r from-amber-500 to-yellow-500 p-6 text-center relative">
           <div className="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center">
             <User className="w-8 h-8 text-amber-600" />
           </div>
-          <h2 className="text-white text-lg font-semibold">Fundex</h2>
+          <h2 className="text-white text-lg font-semibold">Ritik </h2>
           <p className="text-white/80 text-sm">ID: FX23111345</p>
         </div>
 

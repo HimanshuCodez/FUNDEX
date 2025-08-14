@@ -1,5 +1,5 @@
 import React from "react";
-import { Wallet, CreditCard, Users, TrendingUp, Send } from "lucide-react";
+import { Wallet, CreditCard, Users, TrendingUp, Send, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ActionCards = () => {
@@ -13,9 +13,8 @@ const ActionCards = () => {
     {[
       { icon: <CreditCard size={28} />, label: "Recharge", to: "/recharge" },
       { icon: <Wallet size={28} />, label: "Withdraw", to: "/withdraw" },
-      { icon: <Users size={28} />, label: "Team", to: "/team" },
       { icon: <TrendingUp size={28} />, label: "Invest", to: "/invest" },
-      { icon: <Send size={28} />, label: "Telegram", to: "/telegram" },
+      { icon: <User size={28} />, label: "Profile", to: "/account" },
     ].map((btn, i) => (
       <Link to={btn.to} key={i}>
         <div
