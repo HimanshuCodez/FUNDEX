@@ -1,51 +1,39 @@
-import React from 'react';
-import './App.css';
-import Carousel from './Carousel';
-import ActionCards from './ActionCards';
+import React from "react";
 
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import FundexaDashboard from './page/Dashboard';
+
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import FundexaDashboard from "./Admin/Dashboard";
+import Home from "./page/Home";
+import ActionCards from "./components/ActionCards";
 
 function App() {
-  const slides = [
-    { image: 'https://techeor.co.in/suceed-15/images/product/b-4.jpg' },
-    { image: 'https://techeor.co.in/suceed-15/images/product/b-3.jpg' },
-    { image: 'https://techeor.co.in/suceed-15/images/product/b-2.jpg' },
-  ];
-
   return (
-    <Router>
-      <div className="App">
-        {/* Navigation */}
-        <nav style={{ padding: "10px", background: "#f5f5f5" }}>
-          <Link to="/" style={{ marginRight: "10px" }}>Home</Link>
-          <Link to="/dashboard">Dashboard</Link>
-        </nav>
+  
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Background video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src="/bgvid.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      ></video>
 
-        <Routes>
-          {/* Home Page */}
-          <Route
-            path="/"
-            element={
-              <>
-         
-                <video autoPlay loop muted className="background-video">
-                  <source src="/bgvid.mp4" type="video/mp4" />
-                </video>
-                <div className="content">
-                  <Carousel slides={slides} />
-                  <ActionCards />
-                </div>
-              </>
-            }
-          />
-
-          {/* Dashboard Page */}
-          <Route path="/dashboard" element={<FundexaDashboard />} />
-        </Routes>
+      {/* Overlay content */}
+      <div className="relative z-10 flex items-center justify-center h-full text-white bg-black/40">
+       <Home/>
       </div>
-    </Router>
+    </div>
   );
 }
 
+    <Router>
+      <Routes>
+       
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<FundexaDashboard />} />
+      </Routes>
+    </Router>
+ 
 export default App;
