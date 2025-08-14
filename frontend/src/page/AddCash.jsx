@@ -21,10 +21,8 @@ export function AddCash() {
   return (
     <div className="font-roboto">
   
-      <div className="py-5 px-4 bg-blue-900">
-        <div className="bg-black text-white" style={{ fontSize: '10px', padding: '5px' }}>
-          FUNDEX
-        </div>
+      <div className="py-5 px-4 ">
+    
         <div className="mt-4 text-white">Choose Amount to Add</div>
         <div className="mt-3">
           <div className="text-white text-[14px] mb-1">Enter Amount</div>
