@@ -2,25 +2,68 @@ import React, { useState, useEffect } from "react";
 import { Wallet, CreditCard, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 const ActionCards = () => {
   const [activeTab, setActiveTab] = useState("long");
   const [plans, setPlans] = useState([]);
+  const [userBalance, setUserBalance] = useState(0);
+  const [userCurrentPlan, setUserCurrentPlan] = useState(null);
 
   useEffect(() => {
-    const fetchPlans = async () => {
+    const fetchPlansAndUser = async () => {
       try {
-        const res = await axios.get('/api/plans');
-        setPlans(res.data);
+        const plansRes = await axios.get('/api/plans');
+        setPlans(plansRes.data);
+
+        const token = localStorage.getItem('token');
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          const userId = decodedToken.user.id;
+          const userRes = await axios.get(`/api/users/${userId}`, {
+            headers: { 'x-auth-token': token },
+          });
+          setUserBalance(userRes.data.balance);
+          setUserCurrentPlan(userRes.data.currentPlan);
+        }
       } catch (err) {
         console.error(err);
       }
     };
-    fetchPlans();
+    fetchPlansAndUser();
   }, []);
 
-  const longPlans = plans.filter(plan => plan.type === 'long');
-  const vipPlans = plans.filter(plan => plan.type === 'vip');
+  const handleBuyPlan = async (planId, planPrice) => {
+    try {
+      if (userBalance < planPrice) {
+        toast.error("Recharge first to buy this plan.");
+        return;
+      }
+
+      if (userCurrentPlan) {
+        toast.error("You already have an active plan.");
+        return;
+      }
+
+      const res = await axios.post(
+        "/api/users/buy-plan",
+        { planId },
+        {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        }
+      );
+      toast.success(res.data.msg);
+      setUserBalance(res.data.user.balance);
+      setUserCurrentPlan(res.data.user.currentPlan);
+    } catch (err) {
+      toast.error(err.response.data.msg || "Failed to purchase plan.");
+      console.error(err);
+    }
+  };
+
+  const longPlans = plans.filter((plan) => plan.type === "long");
+  const vipPlans = plans.filter((plan) => plan.type === "vip");
 
   const displayedPlans = activeTab === "long" ? longPlans : vipPlans;
 
@@ -114,9 +157,18 @@ const ActionCards = () => {
                     </div>
                   </div>
 
-                  <button className="rounded-full w-full py-2 font-bold text-sm shadow-lg animate-yellowBlackPulse">
-                    Buy Now
-                  </button>
+                  {userCurrentPlan === plan._id ? (
+                    <button className="rounded-full w-full py-2 font-bold text-sm shadow-lg bg-gray-500 text-white cursor-not-allowed">
+                      Already Buyed
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleBuyPlan(plan._id, plan.price)}
+                      className="rounded-full w-full py-2 font-bold text-sm shadow-lg animate-yellowBlackPulse"
+                    >
+                      Buy Now
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
