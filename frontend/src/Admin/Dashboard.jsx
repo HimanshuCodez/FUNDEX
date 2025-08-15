@@ -60,7 +60,7 @@ const PaymentsTable = ({ payments, handleUpdatePaymentStatus }) => (
                             {payment.status === 'pending' && (
                                 <>
                                     <button
-                                        onClick={() => handleUpdatePaymentStatus(payment._id, 'approved')}
+                                        onClick={() => handleUpdatePaymentStatus(payment, 'approved')}
                                         className="bg-green-500 text-white px-2 py-1 rounded-md"
                                     >
                                         Approve
@@ -166,12 +166,21 @@ const FundexaDashboard = () => {
     setError('');
   };
 
-  const handleUpdatePaymentStatus = async (id, status) => {
+  const handleUpdatePaymentStatus = async (payment, status) => {
     try {
-      await axios.put(`/api/payment/${id}`, { status }, {
+      await axios.put(`/api/payment/${payment._id}`, { status }, {
         headers: { 'x-auth-token': localStorage.getItem('token') }
       });
-      setPayments(payments.map(p => p._id === id ? { ...p, status } : p));
+
+      setPayments(payments.map(p => p._id === payment._id ? { ...p, status } : p));
+
+      if (status === 'approved') {
+          const userToUpdate = users.find(u => u._id === payment.user._id);
+          if(userToUpdate) {
+              const updatedUsers = users.map(u => u._id === payment.user._id ? {...u, balance: u.balance + payment.amount} : u);
+              setUsers(updatedUsers);
+          }
+      }
     } catch (err) {
       console.error(err);
     }

@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import Payment from '../models/Payment.model.js';
+import User from '../models/User.model.js';
 import auth from '../middleware/auth.js';
 import adminAuth from '../middleware/adminAuth.js';
 
@@ -59,6 +60,15 @@ router.put('/:id', adminAuth, async (req, res) => {
 
     if (!payment) {
       return res.status(404).json({ msg: 'Payment not found' });
+    }
+
+    // If payment is approved, update user's balance
+    if (status === 'approved' && payment.status !== 'approved') {
+      const user = await User.findById(payment.user);
+      if (user) {
+        user.balance += payment.amount;
+        await user.save();
+      }
     }
 
     payment.status = status;

@@ -1,3 +1,7 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import { 
   User, 
   Diamond, 
@@ -10,15 +14,38 @@ import {
   ChevronRight,
   LogOut
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          const userId = decodedToken.user.id;
+          const res = await axios.get(`/api/users/${userId}`, {
+            headers: { 'x-auth-token': token },
+          });
+          setUser(res.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     // from-amber-700 via-amber-600 to-yellow-500
@@ -29,35 +56,17 @@ export default function Account() {
           <div className="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center">
             <User className="w-8 h-8 text-amber-600" />
           </div>
-          <h2 className="text-white text-lg font-semibold">Ritik </h2>
-          <p className="text-white/80 text-sm">ID: FX23111345</p>
+          <h2 className="text-white text-lg font-semibold">{user.name}</h2>
+          <p className="text-white/80 text-sm">ID: {user._id}</p>
         </div>
 
-        {/* VIP Section */}
-        <div className="mx-6 -mt-3 mb-6">
-          <div className="bg-gradient-to-r from-yellow-400 to-amber-400 rounded-2xl p-4 relative overflow-hidden">
-            <div className="absolute top-2 right-2">
-              <Diamond className="w-8 h-8 text-yellow-600 opacity-20" />
-            </div>
-            <div className="flex items-center mb-3">
-              <Diamond className="w-4 h-4 text-amber-700 mr-2" />
-              <span className="bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-bold">
-                VIP
-              </span>
-            </div>
-            <p className="text-amber-800 text-xs mb-2">CURRENT PROGRESS 0.00 / 550.00</p>
-            <div className="bg-amber-700/20 rounded-full h-2">
-              <div className="bg-amber-700 h-2 rounded-full w-0"></div>
-            </div>
-          </div>
-        </div>
 
         {/* Account Balance */}
         <div className="mx-6 mb-6">
           <div className="bg-gray-50 rounded-2xl p-4 flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Account Balance</p>
-              <p className="text-2xl font-bold text-gray-800">0.00</p>
+              <p className="text-2xl font-bold text-gray-800">{user.balance.toFixed(2)}</p>
             </div>
             <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-semibold text-sm transition-colors">
               RECHARGE
