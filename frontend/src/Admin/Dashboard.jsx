@@ -3,7 +3,7 @@ import axios from 'axios';
 import { 
   FiUser, FiLock, FiEye, FiEyeOff, FiHome, FiUsers, FiDollarSign, 
   FiTrendingUp, FiBell, FiSettings, FiLogOut,  FiPieChart,
-  FiActivity, FiShoppingCart, FiMail, FiPhone, FiMapPin
+  FiActivity, FiShoppingCart, 
 } from 'react-icons/fi';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
 import { IndianRupee } from 'lucide-react';
@@ -32,7 +32,7 @@ const UsersTable = ({ users }) => (
   </div>
 );
 
-const PaymentsTable = ({ payments, handleUpdatePaymentStatus }) => (
+const PaymentsTable = ({ payments, handleUpdatePaymentStatus, handleDeletePayment }) => (
     <div className="bg-white text-black rounded-2xl shadow-lg p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-6">Payments</h3>
         <table className="w-full">
@@ -66,13 +66,20 @@ const PaymentsTable = ({ payments, handleUpdatePaymentStatus }) => (
                                         Approve
                                     </button>
                                     <button
-                                        onClick={() => handleUpdatePaymentStatus(payment._id, 'rejected')}
+                                        onClick={() => handleUpdatePaymentStatus(payment, 'rejected')}
                                         className="bg-red-500 text-white px-2 py-1 rounded-md ml-2"
                                     >
                                         Reject
                                     </button>
                                 </>
                             )}
+                            <button
+                                onClick={() => handleDeletePayment(payment._id)}
+                                className="bg-gray-500 text-white px-2 py-1 rounded-md ml-2"
+                            >
+                                Delete
+                            </button>
+                            
                         </td>
                     </tr>
                 ))}
@@ -80,6 +87,119 @@ const PaymentsTable = ({ payments, handleUpdatePaymentStatus }) => (
         </table>
     </div>
 );
+
+const PlansTable = ({ plans, handleDeletePlan }) => (
+  <div className="bg-white text-black rounded-2xl shadow-lg p-6">
+    <h3 className="text-xl font-bold text-gray-900 mb-6">Plans</h3>
+    <table className="w-full">
+      <thead>
+        <tr>
+          <th className="text-left">Image</th>
+          <th className="text-left">Name</th>
+          <th className="text-left">Price</th>
+          <th className="text-left">Daily</th>
+          <th className="text-left">Days</th>
+          <th className="text-left">Revenue</th>
+          <th className="text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {plans.map(plan => (
+          <tr key={plan._id}>
+            <td><img src={`http://localhost:5000/${plan.image}`} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
+            <td>{plan.name}</td>
+            <td>{plan.price}</td>
+            <td>{plan.daily}</td>
+            <td>{plan.days}</td>
+            <td>{plan.revenue}</td>
+            <td>
+              <button
+                onClick={() => handleDeletePlan(plan._id)}
+                className="bg-red-500 text-white px-2 py-1 rounded-md"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
+const CreatePlanForm = ({ handleCreatePlan }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    price: '',
+    daily: '',
+    days: '',
+    revenue: '',
+    image: null,
+    type: 'long',
+  });
+
+  const handleChange = (e) => {
+    if (e.target.name === 'image') {
+      setFormData({ ...formData, image: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleCreatePlan(formData);
+    setFormData({
+      name: '',
+      price: '',
+      daily: '',
+      days: '',
+      revenue: '',
+      image: null,
+      type: 'long',
+    });
+  };
+
+  return (
+    <div className="bg-white text-black rounded-2xl shadow-lg p-6 mb-8">
+      <h3 className="text-xl font-bold text-gray-900 mb-6">Create New Plan</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" name="price" value={formData.price} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Daily</label>
+          <input type="number" name="daily" value={formData.daily} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Days</label>
+          <input type="number" name="days" value={formData.days} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Revenue</label>
+          <input type="number" name="revenue" value={formData.revenue} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Image</label>
+          <input type="file" name="image" onChange={handleChange} className="mt-1 block w-full" required />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Type</label>
+          <select name="type" value={formData.type} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+            <option value="long">Long Plan</option>
+            <option value="vip">VIP Plan</option>
+          </select>
+        </div>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">Create Plan</button>
+      </form>
+    </div>
+  );
+};
 
 
 const FundexaDashboard = () => {
@@ -90,7 +210,8 @@ const FundexaDashboard = () => {
   const [error, setError] = useState('');
   const [users, setUsers] = useState([]);
   const [payments, setPayments] = useState([]);
-  const [view, setView] = useState('dashboard'); // dashboard, users, payments
+  const [plans, setPlans] = useState([]);
+  const [view, setView] = useState('dashboard'); // dashboard, users, payments, plans
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -128,8 +249,20 @@ const FundexaDashboard = () => {
         }
       };
 
+      const fetchPlans = async () => {
+        try {
+          const res = await axios.get('/api/plans', {
+            headers: { 'x-auth-token': localStorage.getItem('token') }
+          });
+          setPlans(res.data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
       fetchUsers();
       fetchPayments();
+      fetchPlans();
     }
   }, [isLoggedIn]);
 
@@ -181,6 +314,43 @@ const FundexaDashboard = () => {
               setUsers(updatedUsers);
           }
       }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCreatePlan = async (formData) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-auth-token': localStorage.getItem('token'),
+        },
+      };
+      const res = await axios.post('/api/plans', formData, config);
+      setPlans([...plans, res.data]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDeletePlan = async (id) => {
+    try {
+      await axios.delete(`/api/plans/${id}`, {
+        headers: { 'x-auth-token': localStorage.getItem('token') }
+      });
+      setPlans(plans.filter(plan => plan._id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDeletePayment = async (id) => {
+    try {
+      await axios.delete(`/api/payment/${id}`, {
+        headers: { 'x-auth-token': localStorage.getItem('token') }
+      });
+      setPayments(payments.filter(payment => payment._id !== id));
     } catch (err) {
       console.error(err);
     }
@@ -300,6 +470,10 @@ const FundexaDashboard = () => {
               <IndianRupee size={20} />
               <span className="font-medium">Payments</span>
             </button>
+            <button onClick={() => setView('plans')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'plans' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
+              <FiActivity size={20} />
+              <span className="font-medium">Plans</span>
+            </button>
           </div>
         </nav>
 
@@ -383,10 +557,17 @@ const FundexaDashboard = () => {
 
         {view === 'users' && <UsersTable users={users} />} 
 
-        {view === 'payments' && <PaymentsTable payments={payments} handleUpdatePaymentStatus={handleUpdatePaymentStatus} />} 
+        {view === 'payments' && <PaymentsTable payments={payments} handleUpdatePaymentStatus={handleUpdatePaymentStatus} handleDeletePayment={handleDeletePayment} />} 
+
+        {view === 'plans' && (
+          <>
+            <CreatePlanForm handleCreatePlan={handleCreatePlan} />
+            <PlansTable plans={plans} handleDeletePlan={handleDeletePlan} />
+          </>
+        )} 
       </div>
     </div>
   );
 };
 
-export default FundexaDashboard; 
+export default FundexaDashboard;

@@ -4,6 +4,7 @@ import 'dotenv/config';
 import authRoutes from './routes/auth.route.js';
 import paymentRoutes from './routes/payment.route.js';
 import userRoutes from './routes/user.route.js';
+import planRoutes from './routes/plan.route.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json({ extended: false }));
 app.use('/api/auth', authRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/plans', planRoutes);
 
 // Serve static files
 app.use('/uploads', express.static('uploads'));

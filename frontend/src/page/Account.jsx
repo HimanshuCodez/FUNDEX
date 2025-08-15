@@ -60,6 +60,24 @@ export default function Account() {
           <p className="text-white/80 text-sm">ID: {user._id}</p>
         </div>
 
+        {/* VIP Section */}
+        <div className="mx-6 -mt-3 mb-6">
+          <div className="bg-gradient-to-r from-yellow-400 to-amber-400 rounded-2xl p-4 relative overflow-hidden">
+            <div className="absolute top-2 right-2">
+              <Diamond className="w-8 h-8 text-yellow-600 opacity-20" />
+            </div>
+            <div className="flex items-center mb-3">
+              <Diamond className="w-4 h-4 text-amber-700 mr-2" />
+              <span className="bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-bold">
+                VIP
+              </span>
+            </div>
+            <p className="text-amber-800 text-xs mb-2">CURRENT PROGRESS 0.00 / 550.00</p>
+            <div className="bg-amber-700/20 rounded-full h-2">
+              <div className="bg-amber-700 h-2 rounded-full w-0"></div>
+            </div>
+          </div>
+        </div>
 
         {/* Account Balance */}
         <div className="mx-6 mb-6">
@@ -92,7 +110,7 @@ export default function Account() {
           </div>
           
           <div className="bg-blue-50 rounded-2xl p-4 text-center">
-            <div className="w-12 h-12 bg-blue-200 rounded-xl mx-auto mb-2 flex items-center justify-center">
+            <div className="w-12 h-12 bg-blue-200 rounded-xl flex items-center justify-center">
               <CreditCard className="w-6 h-6 text-blue-600" />
             </div>
             <p className="text-gray-700 font-medium text-sm">Bank Card</p>

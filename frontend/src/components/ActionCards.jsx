@@ -1,46 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Wallet, CreditCard, TrendingUp, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ActionCards = () => {
   const [activeTab, setActiveTab] = useState("long");
+  const [plans, setPlans] = useState([]);
 
-  const longPlans = [
-    { price: 550, daily: 120, days: 180, revenue: 21600 },
-    { price: 1000, daily: 250, days: 200, revenue: 50000 },
-    { price: 1000, daily: 250, days: 200, revenue: 50000 },
-    { price: 1000, daily: 250, days: 200, revenue: 50000 },
-    { price: 2000, daily: 500, days: 300, revenue: 150000 },
-  ];
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const res = await axios.get('/api/plans');
+        setPlans(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchPlans();
+  }, []);
 
-  const vipPlans = [
-    { price: 5000, daily: 1500, days: 100, revenue: 150000 },
-    { price: 10000, daily: 4000, days: 90, revenue: 360000 },
-    { price: 10000, daily: 4000, days: 90, revenue: 360000 },
-    { price: 10000, daily: 4000, days: 90, revenue: 360000 },
-    { price: 20000, daily: 10000, days: 60, revenue: 600000 },
-  ];
+  const longPlans = plans.filter(plan => plan.type === 'long');
+  const vipPlans = plans.filter(plan => plan.type === 'vip');
 
-  const plans = activeTab === "long" ? longPlans : vipPlans;
+  const displayedPlans = activeTab === "long" ? longPlans : vipPlans;
 
   return (
     <div className="min-h-screen bg-gradient-to-b ">
-      
       {/* Top Action Buttons */}
       <div className="flex justify-center pt-8 pb-4">
         <div className="flex gap-20 bg-black/80 backdrop-blur-sm rounded-xl border border-yellow-400 p-4 shadow-2xl">
           {[
-            { icon: <CreditCard size={28} />, label: "Recharge", to: "/recharge" },
+            {
+              icon: <CreditCard size={28} />,
+              label: "Recharge",
+              to: "/recharge",
+            },
             { icon: <Wallet size={28} />, label: "Withdraw", to: "/withdraw" },
             { icon: <TrendingUp size={28} />, label: "Invest", to: "/invest" },
             { icon: <User size={28} />, label: "Profile", to: "/account" },
           ].map((btn, i) => (
             <Link to={btn.to} key={i}>
-              <div
-                className="flex flex-col items-center justify-center w-20 h-20 cursor-pointer rounded-lg border border-white hover:bg-yellow-400/20 transition-all duration-200"
-              >
+              <div className="flex flex-col items-center justify-center w-20 h-20 cursor-pointer rounded-lg border border-white hover:bg-yellow-400/20 transition-all duration-200">
                 <div className="text-white mb-2">{btn.icon}</div>
-                <span className="text-white text-xs font-medium">{btn.label}</span>
+                <span className="text-white text-xs font-medium">
+                  {btn.label}
+                </span>
               </div>
             </Link>
           ))}
@@ -50,7 +54,6 @@ const ActionCards = () => {
       {/* Plan Cards */}
       <div className="flex justify-center px-4">
         <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-2xl w-full max-w-md p-4 shadow-2xl">
-          
           {/* Tabs */}
           <div className="flex justify-center mb-6">
             <div className="flex bg-black/20 rounded-xl p-1">
@@ -74,7 +77,7 @@ const ActionCards = () => {
           </div>
 
           {/* Plan List */}
-          {plans.map((plan, idx) => (
+          {displayedPlans.map((plan, idx) => (
             <div
               key={idx}
               className="bg-black/90 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl"
@@ -83,37 +86,41 @@ const ActionCards = () => {
                 {/* Image Section */}
                 <div className="relative overflow-hidden rounded-xl">
                   <img
-                    src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=300&h=200&fit=crop"
-                    alt="HOME"
+                    src={`http://localhost:5000/${plan.image}`}
+                    alt={plan.name}
                     className="rounded-xl w-28 h-20 object-cover border-2 border-yellow-400"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-yellow-500 text-black text-xs py-1 font-bold text-center">
-                    HOME
+                    {plan.name}
                   </div>
                 </div>
-                
+
                 {/* Plan Details */}
                 <div className="flex-1">
                   <div className="grid grid-cols-2 gap-y-1 text-white text-sm mb-3">
                     <div>Price</div>
-                    <div className="text-right font-semibold">₹ {plan.price}</div>
+                    <div className="text-right font-semibold">
+                      ₹ {plan.price}
+                    </div>
                     <div>Daily</div>
-                    <div className="text-right font-semibold">₹ {plan.daily}</div>
+                    <div className="text-right font-semibold">
+                      ₹ {plan.daily}
+                    </div>
                     <div>Days</div>
                     <div className="text-right font-semibold">{plan.days}</div>
                     <div>Total Revenue</div>
-                    <div className="text-right font-semibold">₹ {plan.revenue}</div>
+                    <div className="text-right font-semibold">
+                      ₹ {plan.revenue}
+                    </div>
                   </div>
-                  
-                 <button className="rounded-full w-full py-2 font-bold text-sm shadow-lg animate-yellowBlackPulse">
-  Buy Now
-</button>
 
+                  <button className="rounded-full w-full py-2 font-bold text-sm shadow-lg animate-yellowBlackPulse">
+                    Buy Now
+                  </button>
                 </div>
               </div>
             </div>
           ))}
-
         </div>
       </div>
     </div>

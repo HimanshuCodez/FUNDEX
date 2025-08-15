@@ -80,4 +80,23 @@ router.put('/:id', adminAuth, async (req, res) => {
   }
 });
 
+// @route   DELETE api/payment/:id
+// @desc    Delete a payment
+// @access  Private (admin)
+router.delete('/:id', adminAuth, async (req, res) => {
+  try {
+    const payment = await Payment.findById(req.params.id);
+
+    if (!payment) {
+      return res.status(404).json({ msg: 'Payment not found' });
+    }
+
+    await payment.deleteOne();
+    res.json({ msg: 'Payment removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 export default router;
