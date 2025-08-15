@@ -117,7 +117,7 @@ const Withdraw = () => {
       ) : (
         <>
           <div className="text-center mb-4">
-            <p className="text-lg">Your balance: <span className="font-bold">₹{userBalance.toFixed(2)}</span></p>
+            <p className="text-lg text-black">Your balance: <span className="font-bold">₹{userBalance.toFixed(2)}</span></p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">

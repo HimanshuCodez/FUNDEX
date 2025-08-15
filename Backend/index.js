@@ -1,12 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import authRoutes from './routes/auth.js';
+import authRoutes from './routes/auth.route.js';
+import paymentRoutes from './routes/payment.route.js';
+import userRoutes from './routes/user.route.js';
 
 const app = express();
 
 // Connect to MongoDB
-const mongoURI = process.env.MONGO_URI || 'mongodb+srv://himanshugaur:fundex@fundex.86joivx.mongodb.net/?retryWrites=true&w=majority&appName=FUNDEX';
+const mongoURI = process.env.MONGO_URI
 
 mongoose.connect(mongoURI)
 .then(() => console.log('MongoDB connected'))
@@ -17,6 +19,11 @@ app.use(express.json({ extended: false }));
 
 // Define Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/users', userRoutes);
+
+// Serve static files
+app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 5000;
 

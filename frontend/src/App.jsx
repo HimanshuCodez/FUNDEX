@@ -11,6 +11,8 @@ import Pay from "./page/Pay";
 import Login from "./page/Login";
 import Signup from "./page/Signup";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
+import PaymentConfirmation from "./page/PaymentConfirmation";
 
 function App() {
   return (
@@ -33,12 +35,13 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-            <Route path="/dashboard" element={<FundexaDashboard />} />
+            <Route path="/dashboard" element={<AdminRoute><FundexaDashboard /></AdminRoute>} />
             <Route path="/recharge" element={<AddCash />} />
             <Route path="/withdraw" element={<Withdraw />} />
             <Route path="/invest" element={<Invest />} />
             <Route path="/account" element={<PrivateRoute><Account /></PrivateRoute>} />
             <Route path="/pay" element={<Pay />} />
+            <Route path="/payment-confirmation" element={<PrivateRoute><PaymentConfirmation /></PrivateRoute>} />
             <Route path="*" element={<Navigate to="/signup" />} />
           </Routes>
         </div>

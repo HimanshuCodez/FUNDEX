@@ -1,7 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import User from '../models/User.model.js';
+import adminAuth from '../middleware/adminAuth.js';
 
 
 const router = express.Router();
@@ -82,6 +83,13 @@ router.post('/login', async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server error');
   }
+});
+
+// @route   GET api/auth/admin-check
+// @desc    Check if user is admin
+// @access  Private (admin)
+router.get('/admin-check', adminAuth, (req, res) => {
+  res.json({ msg: 'Admin access granted' });
 });
 
 export default router;
