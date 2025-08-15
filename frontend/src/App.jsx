@@ -4,9 +4,9 @@ import FundexaDashboard from "./Admin/Dashboard";
 import Home from "./page/Home";
 import Invest from "./page/Invest";
 import Withdraw from "./page/Withdraw";
-
 import Account from "./page/Account";
 import { AddCash } from "./page/AddCash";
+import Pay from "./page/Pay";
 
 function App() {
   return (
@@ -31,11 +31,11 @@ function App() {
             <Route path="/withdraw" element={<Withdraw />} />
             <Route path="/invest" element={<Invest />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/pay" element={<Pay />} />
           </Routes>
         </div>
       </div>
     </Router>
   );
 }
-
 export default App;
