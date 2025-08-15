@@ -7,10 +7,19 @@ import {
   ArrowUpCircle, 
   Users, 
   Gift,
-  ChevronRight
+  ChevronRight,
+  LogOut
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
     // from-amber-700 via-amber-600 to-yellow-500
     <div className="min-h-screen bg-gradient-to-br   p-4">
@@ -126,6 +135,17 @@ export default function Account() {
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </div>
           </div>
+        </div>
+
+        {/* Logout Button */}
+        <div className="mx-6 mb-6">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-full font-semibold text-sm transition-colors"
+          >
+            <LogOut className="w-5 h-5 mr-2" />
+            Logout
+          </button>
         </div>
       </div>
     </div>
