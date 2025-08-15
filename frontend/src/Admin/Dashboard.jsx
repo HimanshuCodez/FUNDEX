@@ -6,6 +6,7 @@ import {
   FiActivity, FiShoppingCart, FiMail, FiPhone, FiMapPin
 } from 'react-icons/fi';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
+import { IndianRupee } from 'lucide-react';
 
 const UsersTable = ({ users }) => (
   <div className="bg-white  text-black rounded-2xl shadow-lg p-6">
@@ -32,7 +33,7 @@ const UsersTable = ({ users }) => (
 );
 
 const PaymentsTable = ({ payments, handleUpdatePaymentStatus }) => (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
+    <div className="bg-white text-black rounded-2xl shadow-lg p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-6">Payments</h3>
         <table className="w-full">
             <thead>
@@ -47,7 +48,7 @@ const PaymentsTable = ({ payments, handleUpdatePaymentStatus }) => (
             <tbody>
                 {payments.map(payment => (
                     <tr key={payment._id}>
-                        <td>{payment.user.name}</td>
+                        <td>{payment.user ? payment.user.name : 'User not found'}</td>
                         <td>{payment.amount}</td>
                         <td>{payment.status}</td>
                         <td>
@@ -287,7 +288,7 @@ const FundexaDashboard = () => {
               <span className="font-medium">Users</span>
             </button>
             <button onClick={() => setView('payments')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'payments' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
-              <FiDollarSign size={20} />
+              <IndianRupee size={20} />
               <span className="font-medium">Payments</span>
             </button>
           </div>
@@ -334,10 +335,10 @@ const FundexaDashboard = () => {
                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
                     <div className="flex items-center justify-between mb-4">
                         <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center shadow-lg`}>
-                            <FiDollarSign className="text-white" size={24} />
+                            <IndianRupee className="text-white" size={24} />
                         </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">${payments.reduce((acc, p) => p.status === 'approved' ? acc + p.amount : acc, 0)}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-1">₹{payments.reduce((acc, p) => p.status === 'approved' ? acc + p.amount : acc, 0)}</h3>
                     <p className="text-gray-600">Total Revenue</p>
                 </div>
                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">

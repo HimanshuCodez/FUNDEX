@@ -23,7 +23,12 @@ const Login = () => {
       const res = await axios.post('/api/auth/login', formData);
       localStorage.setItem('token', res.data.token);
       toast.success('Login successful');
-      navigate('/');
+
+      if (res.data.role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       toast.error(err.response.data.msg || 'Login failed');
       console.error(err.response.data);

@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { CheckCircle } from 'lucide-react';
 
 const PaymentConfirmation = () => {
   const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
   const navigate = useNavigate();
 
   const onFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile) {
+      setPreview(URL.createObjectURL(selectedFile));
+    }
   };
 
   const onSubmit = async (e) => {
@@ -30,13 +37,37 @@ const PaymentConfirmation = () => {
         },
       };
       await axios.post('/api/payment', formData, config);
-      toast.success('Payment screenshot uploaded successfully');
-      navigate('/account'); // or a payment status page
+      setUploadSuccess(true);
     } catch (err) {
       toast.error('Something went wrong');
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (uploadSuccess) {
+      const timer = setTimeout(() => {
+        navigate('/');
+      }, 3000); // 3-second delay
+      return () => clearTimeout(timer);
+    }
+  }, [uploadSuccess, navigate]);
+
+  if (uploadSuccess) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+          <CheckCircle className="mx-auto h-12 w-12 text-green-500" />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Payment Submitted
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Payment confirmation will be done within 30 min from admin.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -67,6 +98,12 @@ const PaymentConfirmation = () => {
                 />
               </div>
             </div>
+
+            {preview && (
+              <div>
+                <img src={preview} alt="Screenshot Preview" className="mt-4 w-full h-auto" />
+              </div>
+            )}
 
             <div>
               <button
