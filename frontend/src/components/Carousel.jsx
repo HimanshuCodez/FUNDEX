@@ -33,7 +33,7 @@ export default function ImageCarousel() {
         <img
           src={slides[current]}
           alt={`Slide ${current + 1}`}
-          className="w-full h-[500px] object-cover transition-all duration-1000"
+          className="w-full h-48 sm:h-64 md:h-80 lg:h-[500px] object-cover transition-all duration-1000"
         />
 
         {/* Left arrow */}

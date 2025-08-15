@@ -93,7 +93,7 @@ export default function Account() {
         </div>
 
         {/* Quick Actions */}
-        <div className="mx-6 mb-6 grid grid-cols-3 gap-4">
+        <div className="mx-6 mb-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div className="bg-yellow-50 rounded-2xl p-4 text-center">
             <div className="w-12 h-12 bg-yellow-200 rounded-xl mx-auto mb-2 flex items-center justify-center">
               <Banknote className="w-6 h-6 text-yellow-600" />

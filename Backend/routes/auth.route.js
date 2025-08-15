@@ -37,7 +37,7 @@ router.post('/signup', async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: 3600 },
+      { expiresIn: 3456000 },
       (err, token) => {
         if (err) throw err;
         res.json({ token });
@@ -74,7 +74,7 @@ router.post('/login', async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: 3600 },
+      { expiresIn: 3456000 }, // 40 days
       (err, token) => {
         if (err) throw err;
         res.json({ token, role: user.role });

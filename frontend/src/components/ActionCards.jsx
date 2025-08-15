@@ -71,7 +71,7 @@ const ActionCards = () => {
     <div className="min-h-screen bg-gradient-to-b ">
       {/* Top Action Buttons */}
       <div className="flex justify-center pt-8 pb-4">
-        <div className="flex gap-20 bg-black/80 backdrop-blur-sm rounded-xl border border-yellow-400 p-4 shadow-2xl">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-20 bg-black/80 backdrop-blur-sm rounded-xl border border-yellow-400 p-4 shadow-2xl">
           {[
             {
               icon: <CreditCard size={28} />,
@@ -83,7 +83,7 @@ const ActionCards = () => {
             { icon: <User size={28} />, label: "Profile", to: "/account" },
           ].map((btn, i) => (
             <Link to={btn.to} key={i}>
-              <div className="flex flex-col items-center justify-center w-20 h-20 cursor-pointer rounded-lg border border-white hover:bg-yellow-400/20 transition-all duration-200">
+              <div className="flex flex-col items-center justify-center w-16 h-16 sm:w-20 sm:h-20 cursor-pointer rounded-lg border border-white hover:bg-yellow-400/20 transition-all duration-200">
                 <div className="text-white mb-2">{btn.icon}</div>
                 <span className="text-white text-xs font-medium">
                   {btn.label}
@@ -140,7 +140,7 @@ const ActionCards = () => {
 
                 {/* Plan Details */}
                 <div className="flex-1">
-                  <div className="grid grid-cols-2 gap-y-1 text-white text-sm mb-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 text-white text-sm mb-3">
                     <div>Price</div>
                     <div className="text-right font-semibold">
                       ₹ {plan.price}
