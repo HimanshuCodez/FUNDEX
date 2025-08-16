@@ -5,7 +5,7 @@ import authRoutes from './routes/auth.route.js';
 import paymentRoutes from './routes/payment.route.js';
 import userRoutes from './routes/user.route.js';
 import planRoutes from './routes/plan.route.js';
-
+import cors from 'cors';
 const app = express();
 
 // Connect to MongoDB
@@ -17,7 +17,11 @@ mongoose.connect(mongoURI)
 
 // Init Middleware
 app.use(express.json({ extended: false }));
-app.use(cors());
+app.use(cors({
+  origin: ['https://fundex-mocha.vercel.app'], // your Vercel frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 // Define Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/payment', paymentRoutes);
