@@ -14,21 +14,27 @@ const ActionCards = () => {
   useEffect(() => {
     const fetchPlansAndUser = async () => {
       try {
-        const plansRes = await axios.get('/api/plans');
-        setPlans(plansRes.data);
+        const plansRes = await axios.get("/api/plans");
+        if (Array.isArray(plansRes.data)) {
+          setPlans(plansRes.data);
+        } else {
+          setPlans([]);
+          console.error("API did not return an array for plans:", plansRes.data);
+        }
 
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
           const decodedToken = jwtDecode(token);
           const userId = decodedToken.user.id;
           const userRes = await axios.get(`/api/users/${userId}`, {
-            headers: { 'x-auth-token': token },
+            headers: { "x-auth-token": token },
           });
           setUserBalance(userRes.data.balance);
           setUserCurrentPlan(userRes.data.currentPlan);
         }
       } catch (err) {
         console.error(err);
+        setPlans([]); // Ensure plans is an array on error
       }
     };
     fetchPlansAndUser();
@@ -62,8 +68,12 @@ const ActionCards = () => {
     }
   };
 
-  const longPlans = plans.filter((plan) => plan.type === "long");
-  const vipPlans = plans.filter((plan) => plan.type === "vip");
+  const longPlans = Array.isArray(plans)
+    ? plans.filter((plan) => plan.type === "long")
+    : [];
+  const vipPlans = Array.isArray(plans)
+    ? plans.filter((plan) => plan.type === "vip")
+    : [];
 
   const displayedPlans = activeTab === "long" ? longPlans : vipPlans;
 
