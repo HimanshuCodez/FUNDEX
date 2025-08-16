@@ -229,7 +229,7 @@ const FundexaDashboard = () => {
     if (isLoggedIn) {
       const fetchUsers = async () => {
         try {
-          const res = await axios.get('/api/users', {
+          const res = await axios.get('https://fundex.onrender.com/api/users', {
             headers: { 'x-auth-token': localStorage.getItem('token') }
           });
           setUsers(res.data);
@@ -240,7 +240,7 @@ const FundexaDashboard = () => {
 
       const fetchPayments = async () => {
         try {
-          const res = await axios.get('/api/payment', {
+          const res = await axios.get('https://fundex.onrender.com/api/payment', {
             headers: { 'x-auth-token': localStorage.getItem('token') }
           });
           setPayments(res.data);
@@ -251,7 +251,7 @@ const FundexaDashboard = () => {
 
       const fetchPlans = async () => {
         try {
-          const res = await axios.get('/api/plans', {
+          const res = await axios.get('https://fundex.onrender.com/api/plans', {
             headers: { 'x-auth-token': localStorage.getItem('token') }
           });
           setPlans(res.data);
@@ -269,12 +269,12 @@ const FundexaDashboard = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/auth/login', { email, password });
+      const res = await axios.post('https://fundex.onrender.com/api/auth/login', { email, password });
       const token = res.data.token;
       localStorage.setItem('token', token);
 
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      const userRes = await axios.get(`/api/users/${decodedToken.user.id}`, {
+      const userRes = await axios.get(`https://fundex.onrender.com/api/users/${decodedToken.user.id}`, {
           headers: { 'x-auth-token': token }
       });
 
@@ -301,7 +301,7 @@ const FundexaDashboard = () => {
 
   const handleUpdatePaymentStatus = async (payment, status) => {
     try {
-      await axios.put(`/api/payment/${payment._id}`, { status }, {
+      await axios.put(`https://fundex.onrender.com/api/payment/${payment._id}`, { status }, {
         headers: { 'x-auth-token': localStorage.getItem('token') }
       });
 
@@ -327,7 +327,7 @@ const FundexaDashboard = () => {
           'x-auth-token': localStorage.getItem('token'),
         },
       };
-      const res = await axios.post('/api/plans', formData, config);
+      const res = await axios.post('https://fundex.onrender.com/api/plans', formData, config);
       setPlans([...plans, res.data]);
     } catch (err) {
       console.error(err);
@@ -336,7 +336,7 @@ const FundexaDashboard = () => {
 
   const handleDeletePlan = async (id) => {
     try {
-      await axios.delete(`/api/plans/${id}`, {
+      await axios.delete(`https://fundex.onrender.com/api/plans/${id}`, {
         headers: { 'x-auth-token': localStorage.getItem('token') }
       });
       setPlans(plans.filter(plan => plan._id !== id));
@@ -347,7 +347,7 @@ const FundexaDashboard = () => {
 
   const handleDeletePayment = async (id) => {
     try {
-      await axios.delete(`/api/payment/${id}`, {
+      await axios.delete(`https://fundex.onrender.com/api/payment/${id}`, {
         headers: { 'x-auth-token': localStorage.getItem('token') }
       });
       setPayments(payments.filter(payment => payment._id !== id));
