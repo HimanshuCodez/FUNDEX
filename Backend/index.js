@@ -17,7 +17,7 @@ mongoose.connect(mongoURI)
 
 // Init Middleware
 app.use(express.json({ extended: false }));
-
+app.use(cors());
 // Define Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/payment', paymentRoutes);
