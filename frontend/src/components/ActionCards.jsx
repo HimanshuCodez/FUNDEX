@@ -14,7 +14,7 @@ const ActionCards = () => {
   useEffect(() => {
     const fetchPlansAndUser = async () => {
       try {
-        const plansRes = await axios.get("/api/plans");
+        const plansRes = await axios.get("https://fundex.onrender.com/api/plans");
         if (Array.isArray(plansRes.data)) {
           setPlans(plansRes.data);
         } else {
@@ -26,7 +26,7 @@ const ActionCards = () => {
         if (token) {
           const decodedToken = jwtDecode(token);
           const userId = decodedToken.user.id;
-          const userRes = await axios.get(`/api/users/${userId}`, {
+          const userRes = await axios.get(`https://fundex.onrender.com/api/users/${userId}`, {
             headers: { "x-auth-token": token },
           });
           setUserBalance(userRes.data.balance);
@@ -53,7 +53,7 @@ const ActionCards = () => {
       }
 
       const res = await axios.post(
-        "/api/users/buy-plan",
+        "https://fundex.onrender.com/api/users/buy-plan",
         { planId },
         {
           headers: { "x-auth-token": localStorage.getItem("token") },

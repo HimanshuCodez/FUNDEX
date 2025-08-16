@@ -14,7 +14,7 @@ const AdminRoute = ({ children }) => {
           return;
         }
 
-        await axios.get('/api/auth/admin-check', {
+        await axios.get('https://fundex.onrender.com/api/auth/admin-check', {
           headers: { 'x-auth-token': token },
         });
         setIsAdmin(true);
