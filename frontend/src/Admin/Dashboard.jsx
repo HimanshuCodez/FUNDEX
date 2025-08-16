@@ -518,7 +518,7 @@ const FundexaDashboard = () => {
                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
                     <div className="flex items-center justify-between mb-4">
                         <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center shadow-lg`}>
-                            <IndianRupee className="text-white" size={24} />
+                            <IndianRupeeIcon className="text-white" size={24} />
                         </div>
                     </div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-1">₹{payments.reduce((acc, p) => p.status === 'approved' ? acc + p.amount : acc, 0)}</h3>
