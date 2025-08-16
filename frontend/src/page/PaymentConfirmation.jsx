@@ -36,7 +36,7 @@ const PaymentConfirmation = () => {
           'x-auth-token': localStorage.getItem('token'),
         },
       };
-      await axios.post('/api/payment', formData, config);
+      await axios.post('https://fundex.onrender.com/api/payment', formData, config);
       setUploadSuccess(true);
     } catch (err) {
       toast.error('Something went wrong');

@@ -26,7 +26,7 @@ const Signup = () => {
       toast.error('Passwords do not match');
     } else {
       try {
-        const res = await axios.post('/api/auth/signup', { name, email, password });
+        const res = await axios.post('https://fundex.onrender.com/api/auth/signup', { name, email, password });
         localStorage.setItem('token', res.data.token);
         toast.success('Signup successful');
         navigate('/');
