@@ -5,6 +5,7 @@ import {
   FiTrendingUp, FiBell, FiSettings, FiLogOut,  FiPieChart,
   FiActivity, FiShoppingCart, 
 } from 'react-icons/fi';
+import { IndianRupeeIcon } from 'lucide-react';
 
 
 const UsersTable = ({ users }) => (
@@ -466,7 +467,7 @@ const FundexaDashboard = () => {
               <span className="font-medium">Users</span>
             </button>
             <button onClick={() => setView('payments')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'payments' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
-              <IndianRupee size={20} />
+              <IndianRupeeIcon size={20} />
               <span className="font-medium">Payments</span>
             </button>
             <button onClick={() => setView('plans')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'plans' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
