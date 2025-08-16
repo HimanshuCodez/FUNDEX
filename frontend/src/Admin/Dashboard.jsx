@@ -52,7 +52,7 @@ const PaymentsTable = ({ payments, handleUpdatePaymentStatus, handleDeletePaymen
                         <td>{payment.amount}</td>
                         <td>{payment.status}</td>
                         <td>
-                            <a href={`https://fundex.onrender.com${payment.screenshot}`} target="_blank" rel="noopener noreferrer">
+                            <a href={`https://fundex.onrender.com/${payment.screenshot}`} target="_blank" rel="noopener noreferrer">
                                 View
                             </a>
                         </td>

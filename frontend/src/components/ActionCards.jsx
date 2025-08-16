@@ -129,7 +129,7 @@ const ActionCards = () => {
                 {/* Image Section */}
                 <div className="relative overflow-hidden rounded-xl">
                   <img
-                    src={`https://fundex.onrender.com${plan.image}`}
+                    src={`https://fundex.onrender.com/${plan.image}`}
                     alt={plan.name}
                     className="rounded-xl w-28 h-20 object-cover border-2 border-yellow-400"
                   />
