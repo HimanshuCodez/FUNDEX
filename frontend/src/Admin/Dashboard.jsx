@@ -52,7 +52,7 @@ const PaymentsTable = ({ payments, handleUpdatePaymentStatus, handleDeletePaymen
                         <td>{payment.amount}</td>
                         <td>{payment.status}</td>
                         <td>
-                            <a href={`http://localhost:5000/${payment.screenshot}`} target="_blank" rel="noopener noreferrer">
+                            <a href={`https://fundex.onrender.com${payment.screenshot}`} target="_blank" rel="noopener noreferrer">
                                 View
                             </a>
                         </td>
@@ -106,7 +106,7 @@ const PlansTable = ({ plans, handleDeletePlan }) => (
       <tbody>
         {plans.map(plan => (
           <tr key={plan._id}>
-            <td><img src={`http://localhost:5000/${plan.image}`} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
+            <td><img src={`https://fundex.onrender.com/${plan.image}`} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
             <td>{plan.name}</td>
             <td>{plan.price}</td>
             <td>{plan.daily}</td>
