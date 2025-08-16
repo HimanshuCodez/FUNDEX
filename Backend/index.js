@@ -20,7 +20,7 @@ app.use(express.json({ extended: false }));
 app.use(cors({
   origin: ['https://fundex-mocha.vercel.app'], // your Vercel frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization',"x-auth-token"]
+  allowedHeaders: ['Content-Type', 'Authorization',"x-auth-token"],
 }));
 // Define Routes
 app.use('/api/auth', authRoutes);

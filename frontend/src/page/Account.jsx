@@ -86,9 +86,11 @@ export default function Account() {
               <p className="text-gray-600 text-sm mb-1">Account Balance</p>
               <p className="text-2xl font-bold text-gray-800">{user.balance.toFixed(2)}</p>
             </div>
+            <Link to="/recharge">
             <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-semibold text-sm transition-colors">
               RECHARGE
             </button>
+            </Link>
           </div>
         </div>
 
@@ -99,7 +101,7 @@ export default function Account() {
               <Banknote className="w-6 h-6 text-yellow-600" />
             </div>
             <p className="text-gray-700 font-medium text-sm">Withdrawal</p>
-            <p className="text-gray-500 text-xs">0.50</p>
+        
           </div>
           
           <div className="bg-purple-50 rounded-2xl p-4 text-center">
@@ -127,7 +129,7 @@ export default function Account() {
                 <div className="w-10 h-10 bg-yellow-200 rounded-xl flex items-center justify-center mr-3">
                   <ArrowDownCircle className="w-5 h-5 text-yellow-600" />
                 </div>
-                <span className="text-gray-700 font-medium">Withdrawal Record</span>
+                <span className="text-gray-700 font-medium">Withdrawal </span>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </div>
@@ -137,30 +139,16 @@ export default function Account() {
                 <div className="w-10 h-10 bg-green-200 rounded-xl flex items-center justify-center mr-3">
                   <ArrowUpCircle className="w-5 h-5 text-green-600" />
                 </div>
-                <span className="text-gray-700 font-medium">Recharge Record</span>
+                <Link to="/recharge">
+                <span className="text-gray-700 font-medium">Recharge </span>
+              </Link>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400" />
             </div>
             
-            <div className="bg-gray-50 rounded-2xl p-4 flex items-center justify-between hover:bg-gray-100 transition-colors cursor-pointer">
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-blue-200 rounded-xl flex items-center justify-center mr-3">
-                  <Users className="w-5 h-5 text-blue-600" />
-                </div>
-                <span className="text-gray-700 font-medium">My Referrals Links</span>
-              </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
-            </div>
+           
             
-            <div className="bg-gray-50 rounded-2xl p-4 flex items-center justify-between hover:bg-gray-100 transition-colors cursor-pointer">
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-purple-200 rounded-xl flex items-center justify-center mr-3">
-                  <Gift className="w-5 h-5 text-purple-600" />
-                </div>
-                <span className="text-gray-700 font-medium">Referral Commissions</span>
-              </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
-            </div>
+            
           </div>
         </div>
 
