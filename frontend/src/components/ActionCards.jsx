@@ -116,8 +116,8 @@ const ActionCards = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 relative ${
                     activeTab === tab
-                      ? "bg-yellow-500 text-black shadow-[0_0_15px_rgba(255,215,0,0.8)]"
-                      : "bg-black text-white hover:bg-gray-700"
+                      ? "bg-black text-white hover:bg-gray-700"
+                      : "bg-yellow-500 text-black shadow-[0_0_15px_rgba(255,215,0,0.8)]"
                   }`}
                 >
                   {tab === "long" ? "Long Plans" : "VIP Plans"}
