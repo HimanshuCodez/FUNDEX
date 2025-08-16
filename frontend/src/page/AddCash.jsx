@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
 import { useState } from "react";
 import { IndianRupee } from "lucide-react";
 
@@ -10,7 +10,7 @@ export function AddCash() {
   const handleNext = () => {
     const parsedAmount = parseInt(amount);
     if (!parsedAmount || parsedAmount < 10 || parsedAmount > 1000000) {
-      alert("Please enter an amount between ₹50 and ₹1000000");
+      toast.error("Please enter an amount between ₹50 and ₹1000000");
       return;
     }
     window.localStorage.setItem("Amount", parsedAmount);

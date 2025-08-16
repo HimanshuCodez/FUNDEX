@@ -20,7 +20,7 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://fundex.onrender.com/auth/login', formData);
+      const res = await axios.post('https://fundex.onrender.com/api/auth/login', formData);
       localStorage.setItem('token', res.data.token);
       toast.success('Login successful');
 

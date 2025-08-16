@@ -26,7 +26,7 @@ export default function Account() {
         if (token) {
           const decodedToken = jwtDecode(token);
           const userId = decodedToken.user.id;
-          const res = await axios.get(`/api/users/${userId}`, {
+          const res = await axios.get(`https://fundex.onrender.com/api/users/${userId}`, {
             headers: { 'x-auth-token': token },
           });
           setUser(res.data);

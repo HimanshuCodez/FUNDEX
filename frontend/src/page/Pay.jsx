@@ -39,7 +39,7 @@ const Pay = () => {
           ) : (
             <>
               <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Example"
+                src="qr.jpg"
                 alt="QR Code"
                 className="mx-auto"
               />

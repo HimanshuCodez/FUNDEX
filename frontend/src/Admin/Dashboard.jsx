@@ -5,8 +5,7 @@ import {
   FiTrendingUp, FiBell, FiSettings, FiLogOut,  FiPieChart,
   FiActivity, FiShoppingCart, 
 } from 'react-icons/fi';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
-import { IndianRupee } from 'lucide-react';
+
 
 const UsersTable = ({ users }) => (
   <div className="bg-white  text-black rounded-2xl shadow-lg p-6">
