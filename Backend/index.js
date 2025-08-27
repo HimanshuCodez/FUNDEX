@@ -18,7 +18,7 @@ mongoose.connect(mongoURI)
 // Init Middleware
 app.use(express.json({ extended: false }));
 app.use(cors({
-  origin: ['https://fundex-mocha.vercel.app'], // your Vercel frontend
+  origin: ['https://fundex-mocha.vercel.app',"http://localhost:5173","https://fundexa.in"], // your Vercel frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization',"x-auth-token"],
 }));
