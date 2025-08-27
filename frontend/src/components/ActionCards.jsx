@@ -106,85 +106,87 @@ const ActionCards = () => {
 
       {/* Plan Cards */}
       <div className="flex justify-center px-4">
-        <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-2xl w-full max-w-md p-4 shadow-2xl">
-          {/* Tabs */}
-          <div className="flex justify-center mb-6">
-            <div className="flex bg-black/20 rounded-xl p-1">
-              {["long", "vip"].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 relative ${
-                    activeTab === tab
-                      ? "bg-black text-white hover:bg-gray-700"
-                      : "bg-yellow-500 text-black shadow-[0_0_15px_rgba(255,215,0,0.8)]"
-                  }`}
-                >
-                  {tab === "long" ? "Long Plans" : "VIP Plans"}
-                  {activeTab === tab && (
-                    <span className="absolute inset-0 rounded-lg animate-pulse bg-yellow-400/20"></span>
-                  )}
-                </button>
-              ))}
-            </div>
+  <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-2xl w-full max-w-md p-4 shadow-2xl">
+    {/* Tabs */}
+    <div className="flex justify-center mb-6">
+      <div className="flex bg-black/20 rounded-xl p-1">
+        {["long", "vip"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 relative ${
+              activeTab === tab
+                ? "bg-black text-white hover:bg-gray-700"
+                : "bg-yellow-500 text-black shadow-[0_0_15px_rgba(255,215,0,0.8)]"
+            }`}
+          >
+            {tab === "long" ? "Long Plans" : "VIP Plans"}
+            {activeTab === tab && (
+              <span className="absolute inset-0 rounded-lg animate-pulse bg-yellow-400/20"></span>
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Plan List */}
+    {displayedPlans.map((plan, idx) => (
+      <div
+        key={idx}
+        className="bg-black/90 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl text-white"
+      >
+        {/* Image Section */}
+        <div className="relative overflow-hidden rounded-xl mb-3">
+          <img
+            src={`https://fundex.onrender.com/${plan.image}`}
+            alt={plan.name}
+            className="w-full h-40 object-cover rounded-xl border-2 border-yellow-400"
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-yellow-500 text-black text-sm py-1 font-bold text-center">
+            {plan.name}
           </div>
+        </div>
 
-          {/* Plan List */}
-          {displayedPlans.map((plan, idx) => (
-            <div
-              key={idx}
-              className="bg-black/90 backdrop-blur-sm rounded-2xl p-4 mb-4 shadow-xl"
+        {/* Plan Details */}
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span>Price</span>
+            <span className="font-semibold">₹ {plan.price}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Daily</span>
+            <span className="font-semibold">₹ {plan.daily}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Days</span>
+            <span className="font-semibold">{plan.days}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Total Revenue</span>
+            <span className="font-semibold">₹ {plan.revenue}</span>
+          </div>
+        </div>
+
+        {/* Button */}
+        <div className="mt-4">
+          {userCurrentPlan === plan._id ? (
+            <button className="rounded-full w-full py-2 font-bold text-sm shadow-lg bg-gray-500 text-white cursor-not-allowed">
+              Already Buyed
+            </button>
+          ) : (
+            <button
+              onClick={() => handleBuyPlan(plan._id, plan.price)}
+              className="rounded-full w-full py-2 font-bold text-sm shadow-lg animate-yellowBlackPulse"
             >
-              <div className="flex items-center gap-4">
-                {/* Image Section */}
-                <div className="relative overflow-hidden rounded-xl">
-                  <img
-                    src={`https://fundex.onrender.com/${plan.image}`}
-                    alt={plan.name}
-                    className="rounded-xl w-28 h-20 object-cover border-2 border-yellow-400"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-yellow-500 text-black text-xs py-1 font-bold text-center">
-                    {plan.name}
-                  </div>
-                </div>
-
-                {/* Plan Details */}
-                <div className="flex-1">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 text-white text-sm mb-3">
-                    <div>Price</div>
-                    <div className="text-right font-semibold">
-                      ₹ {plan.price}
-                    </div>
-                    <div>Daily</div>
-                    <div className="text-right font-semibold">
-                      ₹ {plan.daily}
-                    </div>
-                    <div>Days</div>
-                    <div className="text-right font-semibold">{plan.days}</div>
-                    <div>Total Revenue</div>
-                    <div className="text-right font-semibold">
-                      ₹ {plan.revenue}
-                    </div>
-                  </div>
-
-                  {userCurrentPlan === plan._id ? (
-                    <button className="rounded-full w-full py-2 font-bold text-sm shadow-lg bg-gray-500 text-white cursor-not-allowed">
-                      Already Buyed
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleBuyPlan(plan._id, plan.price)}
-                      className="rounded-full w-full py-2 font-bold text-sm shadow-lg animate-yellowBlackPulse"
-                    >
-                      Buy Now
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
+              Buy Now
+            </button>
+          )}
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 };

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { 
   FiUser, FiLock, FiEye, FiEyeOff, FiHome, FiUsers, FiDollarSign, 
   FiTrendingUp, FiBell, FiSettings, FiLogOut,  FiPieChart,
-  FiActivity, FiShoppingCart, 
+  FiActivity, FiShoppingCart, FiMenu, FiX
 } from 'react-icons/fi';
 import { IndianRupeeIcon } from 'lucide-react';
 
@@ -11,119 +11,125 @@ import { IndianRupeeIcon } from 'lucide-react';
 const UsersTable = ({ users }) => (
   <div className="bg-white  text-black rounded-2xl shadow-lg p-6">
     <h3 className="text-xl font-bold text-gray-900 mb-6">Users</h3>
-    <table className="w-full">
-      <thead>
-        <tr>
-          <th className="text-left">Name</th>
-          <th className="text-left">Email</th>
-          <th className="text-left">Role</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map(user => (
-          <tr key={user._id}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-            <td>{user.role}</td>
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[600px]">
+        <thead>
+          <tr>
+            <th className="text-left py-2 px-3">Name</th>
+            <th className="text-left py-2 px-3">Email</th>
+            <th className="text-left py-2 px-3">Role</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user._id} className="border-t">
+              <td className="py-2 px-3">{user.name}</td>
+              <td className="py-2 px-3">{user.email}</td>
+              <td className="py-2 px-3">{user.role}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </div>
 );
 
 const PaymentsTable = ({ payments, handleUpdatePaymentStatus, handleDeletePayment }) => (
     <div className="bg-white text-black rounded-2xl shadow-lg p-6">
         <h3 className="text-xl font-bold text-gray-900 mb-6">Payments</h3>
-        <table className="w-full">
-            <thead>
-                <tr>
-                    <th className="text-left">User</th>
-                    <th className="text-left">Amount</th>
-                    <th className="text-left">Status</th>
-                    <th className="text-left">Screenshot</th>
-                    <th className="text-left">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {payments.map(payment => (
-                    <tr key={payment._id}>
-                        <td>{payment.user ? payment.user.name : 'User not found'}</td>
-                        <td>{payment.amount}</td>
-                        <td>{payment.status}</td>
-                        <td>
-                            <a href={`https://fundex.onrender.com/${payment.screenshot}`} target="_blank" rel="noopener noreferrer">
-                                View
-                            </a>
-                        </td>
-                        <td>
-                            {payment.status === 'pending' && (
-                                <>
-                                    <button
-                                        onClick={() => handleUpdatePaymentStatus(payment, 'approved')}
-                                        className="bg-green-500 text-white px-2 py-1 rounded-md"
-                                    >
-                                        Approve
-                                    </button>
-                                    <button
-                                        onClick={() => handleUpdatePaymentStatus(payment, 'rejected')}
-                                        className="bg-red-500 text-white px-2 py-1 rounded-md ml-2"
-                                    >
-                                        Reject
-                                    </button>
-                                </>
-                            )}
-                            <button
-                                onClick={() => handleDeletePayment(payment._id)}
-                                className="bg-gray-500 text-white px-2 py-1 rounded-md ml-2"
-                            >
-                                Delete
-                            </button>
-                            
-                        </td>
+        <div className="overflow-x-auto">
+            <table className="w-full min-w-[800px]">
+                <thead>
+                    <tr>
+                        <th className="text-left py-2 px-3">User</th>
+                        <th className="text-left py-2 px-3">Amount</th>
+                        <th className="text-left py-2 px-3">Status</th>
+                        <th className="text-left py-2 px-3">Screenshot</th>
+                        <th className="text-left py-2 px-3">Actions</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {payments.map(payment => (
+                        <tr key={payment._id} className="border-t">
+                            <td className="py-2 px-3">{payment.user ? payment.user.name : 'User not found'}</td>
+                            <td className="py-2 px-3">{payment.amount}</td>
+                            <td className="py-2 px-3">{payment.status}</td>
+                            <td className="py-2 px-3">
+                                <a href={`https://fundex.onrender.com/${payment.screenshot}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                    View
+                                </a>
+                            </td>
+                            <td className="py-2 px-3 flex items-center space-x-2">
+                                {payment.status === 'pending' && (
+                                    <>
+                                        <button
+                                            onClick={() => handleUpdatePaymentStatus(payment, 'approved')}
+                                            className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 transition"
+                                        >
+                                            Approve
+                                        </button>
+                                        <button
+                                            onClick={() => handleUpdatePaymentStatus(payment, 'rejected')}
+                                            className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition"
+                                        >
+                                            Reject
+                                        </button>
+                                    </>
+                                )}
+                                <button
+                                    onClick={() => handleDeletePayment(payment._id)}
+                                    className="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 transition"
+                                >
+                                    Delete
+                                </button>
+                                
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     </div>
 );
 
 const PlansTable = ({ plans, handleDeletePlan }) => (
   <div className="bg-white text-black rounded-2xl shadow-lg p-6">
     <h3 className="text-xl font-bold text-gray-900 mb-6">Plans</h3>
-    <table className="w-full">
-      <thead>
-        <tr>
-          <th className="text-left">Image</th>
-          <th className="text-left">Name</th>
-          <th className="text-left">Price</th>
-          <th className="text-left">Daily</th>
-          <th className="text-left">Days</th>
-          <th className="text-left">Revenue</th>
-          <th className="text-left">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {plans.map(plan => (
-          <tr key={plan._id}>
-            <td><img src={`https://fundex.onrender.com/${plan.image}`} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
-            <td>{plan.name}</td>
-            <td>{plan.price}</td>
-            <td>{plan.daily}</td>
-            <td>{plan.days}</td>
-            <td>{plan.revenue}</td>
-            <td>
-              <button
-                onClick={() => handleDeletePlan(plan._id)}
-                className="bg-red-500 text-white px-2 py-1 rounded-md"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="overflow-x-auto">
+        <table className="w-full min-w-[800px]">
+        <thead>
+            <tr>
+            <th className="text-left py-2 px-3">Image</th>
+            <th className="text-left py-2 px-3">Name</th>
+            <th className="text-left py-2 px-3">Price</th>
+            <th className="text-left py-2 px-3">Daily</th>
+            <th className="text-left py-2 px-3">Days</th>
+            <th className="text-left py-2 px-3">Revenue</th>
+            <th className="text-left py-2 px-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {plans.map(plan => (
+            <tr key={plan._id} className="border-t">
+                <td className="py-2 px-3"><img src={`https://fundex.onrender.com/${plan.image}`} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
+                <td className="py-2 px-3">{plan.name}</td>
+                <td className="py-2 px-3">{plan.price}</td>
+                <td className="py-2 px-3">{plan.daily}</td>
+                <td className="py-2 px-3">{plan.days}</td>
+                <td className="py-2 px-3">{plan.revenue}</td>
+                <td className="py-2 px-3">
+                <button
+                    onClick={() => handleDeletePlan(plan._id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition"
+                >
+                    Delete
+                </button>
+                </td>
+            </tr>
+            ))}
+        </tbody>
+        </table>
+    </div>
   </div>
 );
 
@@ -164,38 +170,40 @@ const CreatePlanForm = ({ handleCreatePlan }) => {
     <div className="bg-white text-black rounded-2xl shadow-lg p-6 mb-8">
       <h3 className="text-xl font-bold text-gray-900 mb-6">Create New Plan</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Price</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Daily</label>
-          <input type="number" name="daily" value={formData.daily} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Days</label>
-          <input type="number" name="days" value={formData.days} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Revenue</label>
-          <input type="number" name="revenue" value={formData.revenue} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" name="name" value={formData.name} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Price</label>
+                <input type="number" name="price" value={formData.price} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Daily</label>
+                <input type="number" name="daily" value={formData.daily} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Days</label>
+                <input type="number" name="days" value={formData.days} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Revenue</label>
+                <input type="number" name="revenue" value={formData.revenue} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-gray-700">Type</label>
+                <select name="type" value={formData.type} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                    <option value="long">Long Plan</option>
+                    <option value="vip">VIP Plan</option>
+                </select>
+            </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Image</label>
           <input type="file" name="image" onChange={handleChange} className="mt-1 block w-full" required />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Type</label>
-          <select name="type" value={formData.type} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
-            <option value="long">Long Plan</option>
-            <option value="vip">VIP Plan</option>
-          </select>
-        </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">Create Plan</button>
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">Create Plan</button>
       </form>
     </div>
   );
@@ -212,15 +220,20 @@ const FundexaDashboard = () => {
   const [payments, setPayments] = useState([]);
   const [plans, setPlans] = useState([]);
   const [view, setView] = useState('dashboard'); // dashboard, users, payments, plans
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-        const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        if (decodedToken.exp * 1000 < Date.now()) {
+        try {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            if (decodedToken.exp * 1000 < Date.now()) {
+                localStorage.removeItem('token');
+            } else {
+                setIsLoggedIn(true);
+            }
+        } catch (e) {
             localStorage.removeItem('token');
-        } else {
-            setIsLoggedIn(true);
         }
     }
   }, []);
@@ -444,33 +457,36 @@ const FundexaDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 w-64 h-full bg-white shadow-xl z-30">
-        <div className="p-6 border-b">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-lg">F</span>
+      <div className={`fixed left-0 top-0 w-64 h-full bg-white shadow-xl z-40 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 border-b flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">F</span>
+                </div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                FUNDEXA
+                </h1>
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              FUNDEXA
-            </h1>
-          </div>
+            <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-600">
+                <FiX size={24} />
+            </button>
         </div>
 
         <nav className="p-4">
           <div className="space-y-2">
-            <button onClick={() => setView('dashboard')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'dashboard' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
+            <button onClick={() => { setView('dashboard'); setIsSidebarOpen(false); }} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'dashboard' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
               <FiHome size={20} />
               <span className="font-medium">Dashboard</span>
             </button>
-            <button onClick={() => setView('users')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'users' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
+            <button onClick={() => { setView('users'); setIsSidebarOpen(false); }} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'users' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
               <FiUsers size={20} />
               <span className="font-medium">Users</span>
             </button>
-            <button onClick={() => setView('payments')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'payments' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
+            <button onClick={() => { setView('payments'); setIsSidebarOpen(false); }} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'payments' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
               <IndianRupeeIcon size={20} />
               <span className="font-medium">Payments</span>
             </button>
-            <button onClick={() => setView('plans')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'plans' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
+            <button onClick={() => { setView('plans'); setIsSidebarOpen(false); }} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${view === 'plans' ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100 hover:text-purple-600'}`}>
               <FiActivity size={20} />
               <span className="font-medium">Plans</span>
             </button>
@@ -488,83 +504,92 @@ const FundexaDashboard = () => {
         </div>
       </div>
 
+      {isSidebarOpen && <div className="fixed inset-0 bg-black opacity-50 z-30 md:hidden" onClick={() => setIsSidebarOpen(false)}></div>}
+
       {/* Main Content */}
-      <div className="ml-64 p-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Admin!</h2>
-            <p className="text-gray-600">Here's what's happening with your business today.</p>
-          </div>
-          <div className="flex items-center space-x-4">
-            <button className="relative p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-300">
-              <FiBell size={24} />
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">{payments.filter(p => p.status === 'pending').length}</span>
-            </button>
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
-                <FiUser className="text-white" size={20} />
-              </div>
-              <div>
-                <p className="font-medium text-gray-900">Admin User</p>
-                <p className="text-sm text-gray-500">Administrator</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {view === 'dashboard' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center shadow-lg`}>
-                            <IndianRupeeIcon className="text-white" size={24} />
-                        </div>
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">₹{payments.reduce((acc, p) => p.status === 'approved' ? acc + p.amount : acc, 0)}</h3>
-                    <p className="text-gray-600">Total Revenue</p>
-                </div>
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center shadow-lg`}>
-                            <FiUsers className="text-white" size={24} />
-                        </div>
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">{users.length}</h3>
-                    <p className="text-gray-600">Active Users</p>
-                </div>
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg`}>
-                            <FiTrendingUp className="text-white" size={24} />
-                        </div>
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">{payments.filter(p => p.status === 'pending').length}</h3>
-                    <p className="text-gray-600">Pending Payments</p>
-                </div>
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-orange-600 to-red-600 flex items-center justify-center shadow-lg`}>
-                            <FiShoppingCart className="text-white" size={24} />
-                        </div>
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">{payments.length}</h3>
-                    <p className="text-gray-600">Total Payments</p>
+      <div className="md:ml-64 p-4 sm:p-8">
+        <header className="flex justify-between items-center mb-8">
+            <div className="flex items-center">
+                <button onClick={() => setIsSidebarOpen(true)} className="md:hidden mr-4 text-gray-600">
+                    <FiMenu size={24} />
+                </button>
+                <div>
+                    <h2 className="text-xl sm:text-3xl font-bold text-gray-900">Welcome back, Admin!</h2>
+                    <p className="text-gray-600 hidden sm:block">Here's what's happening with your business today.</p>
                 </div>
             </div>
-          </>
-        )}
+            <div className="flex items-center space-x-2 sm:space-x-4">
+                <button className="relative p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-xl transition-all duration-300">
+                <FiBell size={24} />
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">{payments.filter(p => p.status === 'pending').length}</span>
+                </button>
+                <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+                        <FiUser className="text-white" size={20} />
+                    </div>
+                    <div className="hidden sm:block">
+                        <p className="font-medium text-gray-900">Admin User</p>
+                        <p className="text-sm text-gray-500">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-        {view === 'users' && <UsersTable users={users} />} 
+        <main>
+            {view === 'dashboard' && (
+            <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center shadow-lg`}>
+                                <IndianRupeeIcon className="text-white" size={24} />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-1">₹{payments.reduce((acc, p) => p.status === 'approved' ? acc + p.amount : acc, 0)}</h3>
+                        <p className="text-gray-600">Total Revenue</p>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center shadow-lg`}>
+                                <FiUsers className="text-white" size={24} />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-1">{users.length}</h3>
+                        <p className="text-gray-600">Active Users</p>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg`}>
+                                <FiTrendingUp className="text-white" size={24} />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-1">{payments.filter(p => p.status === 'pending').length}</h3>
+                        <p className="text-gray-600">Pending Payments</p>
+                    </div>
+                    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-orange-600 to-red-600 flex items-center justify-center shadow-lg`}>
+                                <FiShoppingCart className="text-white" size={24} />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-1">{payments.length}</h3>
+                        <p className="text-gray-600">Total Payments</p>
+                    </div>
+                </div>
+            </>
+            )}
 
-        {view === 'payments' && <PaymentsTable payments={payments} handleUpdatePaymentStatus={handleUpdatePaymentStatus} handleDeletePayment={handleDeletePayment} />} 
+            {view === 'users' && <UsersTable users={users} />} 
 
-        {view === 'plans' && (
-          <>
-            <CreatePlanForm handleCreatePlan={handleCreatePlan} />
-            <PlansTable plans={plans} handleDeletePlan={handleDeletePlan} />
-          </>
-        )} 
+            {view === 'payments' && <PaymentsTable payments={payments} handleUpdatePaymentStatus={handleUpdatePaymentStatus} handleDeletePayment={handleDeletePayment} />} 
+
+            {view === 'plans' && (
+            <>
+                <CreatePlanForm handleCreatePlan={handleCreatePlan} />
+                <PlansTable plans={plans} handleDeletePlan={handleDeletePlan} />
+            </>
+            )} 
+        </main>
       </div>
     </div>
   );
