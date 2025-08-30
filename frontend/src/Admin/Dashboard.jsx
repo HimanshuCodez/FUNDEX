@@ -111,7 +111,7 @@ const PlansTable = ({ plans, handleDeletePlan }) => (
         <tbody>
             {plans.map(plan => (
             <tr key={plan._id} className="border-t">
-                <td className="py-2 px-3"><img src={`https://fundex.onrender.com/${plan.image}`} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
+                <td className="py-2 px-3"><img src={plan.image} alt={plan.name} className="w-16 h-16 object-cover rounded-md" /></td>
                 <td className="py-2 px-3">{plan.name}</td>
                 <td className="py-2 px-3">{plan.price}</td>
                 <td className="py-2 px-3">{plan.daily}</td>
